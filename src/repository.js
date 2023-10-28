@@ -15,9 +15,16 @@ export class MongoRepository{
 
     }
     
+    async getLivroById(id){
+        console.log({ "id": id })
+        const result = await this.collection.findOne({ "id": parseInt(id) })
+        console.log(result)
+        return result
+    }
+
     insertLivros(livros){
         console.log(livros)
-        this.collection.insertOne(livros)
+        this.collection.insertMany(livros)
         logger.info("Conexao estabelecida ao servidor do mongo")
     }
 }

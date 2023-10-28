@@ -26,14 +26,12 @@ app.get('/livros', (req, res)=>{
     res.status(200).json(livros)
     logger.info({"Request": "/livros"})
 })
-app.get('/livros/:id', (req, res)=>{
-    console.log(livros[0])
-    if (livros[req.params.id] != null){
-        res.status(200).json(livros[req.params.id])
-    }else{
-        res.status(200).send("Livro nao encontrado")
-    }
+app.get('/livros/:id', async (req, res)=>{
+    const resultFindMongo =  await mongoRepo.getLivroById(req.params.id)
+    console.log("req.params.id")
+    console.log(resultFindMongo)
     logger.info({"Request": "/livros/:id"})
+    res.status(200).send(resultFindMongo)
 })
 
 app.post('/livros', (req, res)=>{
